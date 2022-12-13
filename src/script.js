@@ -22,17 +22,30 @@ const scene = new THREE.Scene()
 // Objects
 const geometry = new THREE.SphereGeometry(.5,64,64);
 
-// Materials
+const partGeo = new THREE.BufferGeometry;
+const partCnt = 5000;
 
-const material = new THREE.MeshStandardMaterial()
+const posArray = new Float32Array(partCnt*3);
+for(let i=0;i<partCnt*3;i++){
+    posArray[i] = Math.random()
+}
+partGeo.setAttribute('position', new THREE.BufferAttribute(pos,3))
+
+// Materials
+/*const material = new THREE.MeshStandardMaterial()
 material.metalness = .8
 material.roughness = .2
 material.normalMap = normalTexture
-material.color = new THREE.Color(0x292929)
+material.color = new THREE.Color(0x292929)*/
+const material = new THREE.PointsMaterial({
+    size : .005
+})
 
 // Mesh
-const sphere = new THREE.Mesh(geometry,material)
-scene.add(sphere)
+//const sphere = new THREE.Mesh(geometry,material)
+const sphere = new THREE.Points(geometry,material)
+const partMesh = new THREE.Points(partGeo,material)
+scene.add(sphere,partMesh)
 
 // Lights
 
