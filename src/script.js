@@ -8,6 +8,8 @@ import { ceilPowerOfTwo } from 'three/src/math/MathUtils'
 //Loading
 const textureLoader = new THREE.TextureLoader()
 const normalTexture = textureLoader.load('../static/textures/NormalMap.png')
+//const cross = textureLoader.load('../static/textures/cross.png')
+const cross = textureLoader.load('../static/textures/circle.png')
 
 // Debug
 const gui = new dat.GUI()
@@ -23,13 +25,13 @@ const scene = new THREE.Scene()
 const geometry = new THREE.SphereGeometry(.5,64,64);
 
 const partGeo = new THREE.BufferGeometry;
-const partCnt = 5000;
+const partCnt = 1000;
 
 const posArray = new Float32Array(partCnt*3);
 for(let i=0;i<partCnt*3;i++){
-    posArray[i] = Math.random()
+    posArray[i] = (Math.random()*5)*(Math.random()-.5)
 }
-partGeo.setAttribute('position', new THREE.BufferAttribute(pos,3))
+partGeo.setAttribute('position', new THREE.BufferAttribute(posArray,3))
 
 // Materials
 /*const material = new THREE.MeshStandardMaterial()
@@ -37,14 +39,19 @@ material.metalness = .8
 material.roughness = .2
 material.normalMap = normalTexture
 material.color = new THREE.Color(0x292929)*/
-const material = new THREE.PointsMaterial({
-    size : .005
+const material = new THREE.PointsMaterial({size : .005})
+const particulematerial = new THREE.PointsMaterial({
+    size : .005,
+    blending : THREE.AdditiveBlending,
+    transparent : true,
+    sizeAttenuation : true,
+    map : cross
 })
 
 // Mesh
 //const sphere = new THREE.Mesh(geometry,material)
 const sphere = new THREE.Points(geometry,material)
-const partMesh = new THREE.Points(partGeo,material)
+const partMesh = new THREE.Points(partGeo,particulematerial)
 scene.add(sphere,partMesh)
 
 // Lights
@@ -128,6 +135,11 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+
+if ( renderer.capabilities.isWebGL2 === false && renderer.extensions.has( 'ANGLE_instanced_arrays' ) === false ) {
+    document.getElementById( 'notSupported' ).style.display = '';
+}
+
 /**
  * Animate
  */
@@ -157,6 +169,7 @@ const tick = () =>
     sphere.rotation.y+=.5*(targetX-sphere.rotation.y)
     sphere.rotation.x+=.05*(targetX-sphere.rotation.x)
     sphere.rotation.z+=.05*(targetX-sphere.rotation.x)
+    partMesh.rotation.y+=.05*(targetX-partMesh.rotation.y)
 
     // Update Orbital Controls
     // controls.update()
