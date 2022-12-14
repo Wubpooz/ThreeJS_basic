@@ -1,35 +1,38 @@
-*
-{
+* {
     margin: 0;
     padding: 0;
 }
 
 html,
-body
-{
+body {
     height: 100vh;
     font-family: 'Poppins';
-    background: rgb(70,70,70);
-}
-body{
-    overflow-x: hidden;
-    -webkit-text-size-adjust:none;
-    -ms-text-size-adjust:none;
-    -moz-text-size-adjust:none;
-    text-size-adjust:none;
+    background: rgb(10, 10, 10);
 }
 
-.webgl
-{
+body {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    text-size-adjust: none;
+
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.webgl {
     position: absolute;
     top: 0;
     left: 0;
     outline: none;
-    cursor : crosshair;
+    cursor: crosshair;
     /*mix-blend-mode : overlay;*/
 }
 
-.container{
+.container {
     height: 100vh;
     display: grid;
     place-items: center;
@@ -37,13 +40,22 @@ body{
     z-index: 1;
     text-align: center;
 }
-h1{
+
+h1 {
     font-size: 8rem;
     text-transform: uppercase;
     color: white;
 }
-section{
-    height: 100vh;
+
+section {
+    height: 60vh;
+    background: rgb(24, 24, 24);
+    padding: 3em;
+    color: white;
+    font-size: x-large;
+    text-align: center;
+    font-weight: 500;
+    margin-inline: 30vw;
 }
 
 /*# sourceMappingURL=main.css.map*/
